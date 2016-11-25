@@ -1,0 +1,34 @@
+version: '2'
+services:
+
+  search:
+    image: ciandtsoftware/solr:acquia-2016-11-08
+    container_name: ${ACQUIA_SUBSCRIPTION}-solr
+    #env_file: ../conf/solr.${ACQUIA_SUBSCRIPTION}.env
+    tty: true
+    stdin_open: true
+
+  cache:
+    image: ciandtsoftware/memcached:acquia-2016-11-08
+    container_name: ${ACQUIA_SUBSCRIPTION}-memcached
+    #env_file: ../conf/memcached.${ACQUIA_SUBSCRIPTION}.env
+    tty: true
+    stdin_open: true
+
+  database:
+    image: ciandtsoftware/percona:acquia-2016-11-24
+    container_name: ${ACQUIA_SUBSCRIPTION}-percona
+    env_file: percona.env
+    tty: true
+    stdin_open: true
+
+  web:
+    image: ciandtsoftware/php:acquia-2016-11-14
+    container_name: ${ACQUIA_SUBSCRIPTION}-php
+    #env_file: ../conf/php.${ACQUIA_SUBSCRIPTION}.env
+    tty: true
+    stdin_open: true
+    links:
+      - cache
+      - search
+      - database
