@@ -1,6 +1,0 @@
-# ignore all files except documentation and gitignore
-*
-!.gitignore
-!LICENSE
-!MAINTAINERS.txt
-!README.md
