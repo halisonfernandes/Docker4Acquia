@@ -5,9 +5,9 @@ $databases = array (
   array (
     'default' =>
     array (
-      'database' => 'test',
-      'username' => 'test',
-      'password' => 'test',
+      'database' => 'subscription-example',
+      'username' => 'root',
+      'password' => 'admin',
       'host' => 'subscription-example-percona',
       'port' => '',
       'driver' => 'mysql',
