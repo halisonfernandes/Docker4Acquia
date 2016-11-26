@@ -14,7 +14,9 @@ DOCKER_COMPOSE=$(which docker-compose)
 
 ## variables
 # Acquia subscription name
-export ACQUIA_SUBSCRIPTION="AcquiaSubscriptionName"
+ACQUIA_SUBSCRIPTION="${1:-"subscription-example"}"
+# transform subscription to lower case
+export ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION,,}
 
 ## functions
 # get Docker container IP
@@ -31,7 +33,7 @@ function get_docker_container_ip()
             --type \
               container \
             --format \
-              "{{ .NetworkSettings.Networks."${_PROJECT_NAME,,}"_default.IPAddress }}" \
+              "{{ .NetworkSettings.Networks."${_PROJECT_NAME}"_default.IPAddress }}" \
             "${_CONTAINER_NAME}" \
           )
 
@@ -55,10 +57,10 @@ if [ $? -eq 0 ]; then
   set -e  #   errexit  - Abort script at first error, when a command exits with non-zero status (except in until or while loops, if-tests, list constructs)
 
   # collect IPs
-  SOLR_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION}" ""${ACQUIA_SUBSCRIPTION}"-solr")
-  MEMCACHED_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION}" ""${ACQUIA_SUBSCRIPTION}"-memcached")
-  PERCONA_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION}" ""${ACQUIA_SUBSCRIPTION}"-percona")
-  PHP_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION}" ""${ACQUIA_SUBSCRIPTION}"-php")
+  SOLR_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-solr")
+  MEMCACHED_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-memcached")
+  PERCONA_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-percona")
+  PHP_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-php")
 
 "${CAT}" << EOM
   _______________________________________________________________________________
@@ -76,20 +78,22 @@ if [ $? -eq 0 ]; then
 
   PHP/Apache is avaiable at:
   ${PHP_IP}:80
+  ${PHP_IP}:443
 
   If you prefer to use hostname instead, please add it to your hosts file
   Just copy and paste the commands below in your terminal or add it manually later
 
-  sudo bash -c 'echo ${SOLR_IP} ${ACQUIA_SUBSCRIPTION,,}-solr.local >> /etc/hosts'
-  sudo bash -c 'echo ${MEMCACHED_IP} ${ACQUIA_SUBSCRIPTION,,}-memcached.local >> /etc/hosts'
-  sudo bash -c 'echo ${PERCONA_IP} ${ACQUIA_SUBSCRIPTION,,}-percona.local >> /etc/hosts'
-  sudo bash -c 'echo ${PHP_IP} ${ACQUIA_SUBSCRIPTION,,}-php.local >> /etc/hosts'
+  sudo bash -c 'echo ${SOLR_IP} ${ACQUIA_SUBSCRIPTION}-solr.local >> /etc/hosts'
+  sudo bash -c 'echo ${MEMCACHED_IP} ${ACQUIA_SUBSCRIPTION}-memcached.local >> /etc/hosts'
+  sudo bash -c 'echo ${PERCONA_IP} ${ACQUIA_SUBSCRIPTION}-percona.local >> /etc/hosts'
+  sudo bash -c 'echo ${PHP_IP} ${ACQUIA_SUBSCRIPTION}-php.local >> /etc/hosts'
 
   THEN, will be able to access at:
-  ${ACQUIA_SUBSCRIPTION,,}-solr.local:9398
-  ${ACQUIA_SUBSCRIPTION,,}-memcached.local:11211
-  ${ACQUIA_SUBSCRIPTION,,}-percona.local:3306
-  ${ACQUIA_SUBSCRIPTION,,}-php.local:80
+  ${ACQUIA_SUBSCRIPTION}-solr.local:9398
+  ${ACQUIA_SUBSCRIPTION}-memcached.local:11211
+  ${ACQUIA_SUBSCRIPTION}-percona.local:3306
+  ${ACQUIA_SUBSCRIPTION}-php.local:80
+  ${ACQUIA_SUBSCRIPTION}-php.local:443
 
   _______________________________________________________________________________
 

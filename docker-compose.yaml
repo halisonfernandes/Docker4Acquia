@@ -4,31 +4,61 @@ services:
   search:
     image: ciandtsoftware/solr:acquia-2016-11-08
     container_name: ${ACQUIA_SUBSCRIPTION}-solr
-    #env_file: ../conf/solr.${ACQUIA_SUBSCRIPTION}.env
+    env_file: .env/solr.${ACQUIA_SUBSCRIPTION}.env
     tty: true
     stdin_open: true
+    # limit memory to 256MB (value must be in bytes)
+    mem_limit: 268435456
+    # limit swap to 512MB (value must be in bytes)
+    memswap_limit: 536870912
 
   cache:
     image: ciandtsoftware/memcached:acquia-2016-11-08
     container_name: ${ACQUIA_SUBSCRIPTION}-memcached
-    #env_file: ../conf/memcached.${ACQUIA_SUBSCRIPTION}.env
+    env_file: .env/memcached.${ACQUIA_SUBSCRIPTION}.env
     tty: true
     stdin_open: true
+    # limit memory to 64MB (value must be in bytes)
+    mem_limit: 67108864
+    # limit swap to 128MB (value must be in bytes)
+    memswap_limit: 134217728
 
   database:
-    image: ciandtsoftware/percona:acquia-2016-11-24
+    image: ciandtsoftware/percona:acquia-2016-11-25
     container_name: ${ACQUIA_SUBSCRIPTION}-percona
-    env_file: percona.env
+    env_file: .env/percona.${ACQUIA_SUBSCRIPTION}.env
     tty: true
     stdin_open: true
+    # limit memory to 1GB (value must be in bytes)
+    mem_limit: 1073741824
+    # limit swap to 2GB (value must be in bytes)
+    memswap_limit: 2147483648
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=${ACQUIA_SUBSCRIPTION}
+    volumes:
+      # mount database store
+      - ./database/${ACQUIA_SUBSCRIPTION}:/var/lib/mysql
 
   web:
-    image: ciandtsoftware/php:acquia-2016-11-14
+    image: ciandtsoftware/php:acquia-2016-11-25
     container_name: ${ACQUIA_SUBSCRIPTION}-php
-    #env_file: ../conf/php.${ACQUIA_SUBSCRIPTION}.env
+    env_file: .env/php.${ACQUIA_SUBSCRIPTION}.env
     tty: true
     stdin_open: true
+    # limit memory to 1GB (value must be in bytes)
+    mem_limit: 1073741824
+    # limit swap to 2GB (value must be in bytes)
+    memswap_limit: 2147483648
+    environment:
+      - ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION}
     links:
       - cache
       - search
       - database
+    volumes:
+      # mount files
+      - ./files/${ACQUIA_SUBSCRIPTION}:/mnt/gfs/${ACQUIA_SUBSCRIPTION}dev
+      - ./files/${ACQUIA_SUBSCRIPTION}:/mnt/gfs/${ACQUIA_SUBSCRIPTION}.dev
+      # mount code
+      - ./code/${ACQUIA_SUBSCRIPTION}:/var/www/html
