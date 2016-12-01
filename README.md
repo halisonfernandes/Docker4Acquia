@@ -53,9 +53,9 @@ And also a tag with __acquia-latest__ for easy use.
 
 ## [Quick Start](#quickstart)
 
-First of all, download the code from __*Acquia subscription GIT repository__.
+First of all, download the code from __[Acquia subscription GIT repository](https://docs.acquia.com/cloud/manage/code/repository/git)__.
 
-We recommend to adopt the path __/home/your-user/workspace__ as your workspace. Then, open a terminal go to the root of your subscription code, probably it is __/home/your-user/workspace/your-subscription__, and add Docker4Acquia as a __**GIT submodule__ with the command:
+We recommend to adopt the path __/home/your-user/workspace__ as your workspace. Then, open a terminal go to the root of your subscription code, probably it is __/home/your-user/workspace/your-subscription__, and add Docker4Acquia as a __[GIT submodule](https://git-scm.com/docs/git-submodule)__ with the command:
 
 ```
 git submodule add https://github.com/ciandt-dev/docker4acquia
@@ -69,11 +69,6 @@ make
 ```
 
 You are ready to go, just follow the instructions on the screen.
-
-\**More information about Acquia GIT [here](https://docs.acquia.com/cloud/manage/code/repository/git).*
-
-\***More information about how GIT submodules work can be found [here](https://git-scm.com/docs/git-submodule).*
-
 
 * * *
 
