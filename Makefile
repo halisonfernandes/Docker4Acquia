@@ -1,6 +1,6 @@
 # define phony targets
-.PHONY: all build clean clean-all debug run
-	#  shell test
+.PHONY: all build clean clean-all debug run shell
+	#   test
 
 # # define behavior for; make AND make all
 # all: run
@@ -24,10 +24,10 @@ run: build
 debug: build
 	@./scripts/get-env.sh ./scripts/debug.sh
 
-# # build, run and connects to shell with variables from .env file
-# shell: build run
-# 	@./scripts/get-env.sh ./scripts/shell.sh
-#
+# build, run and connects to shell with variables from .env file
+shell: build run
+	@./scripts/get-env.sh ./scripts/shell.sh
+
 # stop and remove containers, images
 clean:
 	@./scripts/get-env.sh ./scripts/clean.sh
