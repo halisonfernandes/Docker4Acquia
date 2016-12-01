@@ -65,6 +65,7 @@ git submodule add https://github.com/ciandt-dev/docker4acquia
 Simply start Docker4Acquia with __default parameters__:
 
 ```
+cd docker4acquia
 make
 ```
 
