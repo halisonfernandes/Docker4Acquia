@@ -1,5 +1,6 @@
 # define phony targets
-.PHONY: all build clean clean-all debug run shell test
+.PHONY: all build run
+	#clean clean-all debug shell test
 
 # define behavior for; make AND make all
 all: run
@@ -15,22 +16,22 @@ build:
 run: build
 	@./scripts/get-env.sh ./scripts/run.sh
 
-# perform tests
-test:
-	@./scripts/get-env.sh ./scripts/test.sh
-
-# build, run and attaches terminal with variables from .env file
-debug: build
-	@./scripts/get-env.sh ./scripts/debug.sh
-
-# build, run and connects to shell with variables from .env file
-shell: build run
-	@./scripts/get-env.sh ./scripts/shell.sh
-
-# stop and remove containers, images
-clean:
-	@./scripts/get-env.sh ./scripts/clean.sh
-
-# stop and remove containers, images, dangling images and volumes
-clean-all: clean
-	@./scripts/get-env.sh ./scripts/clean-all.sh
+# # perform tests
+# test:
+# 	@./scripts/get-env.sh ./scripts/test.sh
+#
+# # build, run and attaches terminal with variables from .env file
+# debug: build
+# 	@./scripts/get-env.sh ./scripts/debug.sh
+#
+# # build, run and connects to shell with variables from .env file
+# shell: build run
+# 	@./scripts/get-env.sh ./scripts/shell.sh
+#
+# # stop and remove containers, images
+# clean:
+# 	@./scripts/get-env.sh ./scripts/clean.sh
+#
+# # stop and remove containers, images, dangling images and volumes
+# clean-all: clean
+# 	@./scripts/get-env.sh ./scripts/clean-all.sh
