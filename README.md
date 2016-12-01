@@ -36,7 +36,7 @@ At this moment this solution already contains the following Docker images:
 | search   | [ciandtsoftware/solr](https://hub.docker.com/r/ciandtsoftware/solr)            | 8983   |
 | web      | [ciandtsoftware/php](https://hub.docker.com/r/ciandtsoftware/php)              | 80/443 |
 
-** For specific software, OS, modules and libraries versions, please visit the refered Docker Image page*
+\**For specific software, OS, modules and libraries versions, please visit the refered Docker Image page*
 
 * * *
 
