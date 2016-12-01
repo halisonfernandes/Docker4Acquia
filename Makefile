@@ -2,11 +2,12 @@
 .PHONY: all build clean clean-all debug run shell
 	#   test
 
-# # define behavior for; make AND make all
-# all: run
-# 	@echo "  Waiting 10 seconds before container is up and running before testing" \
-# 	&& sleep 10 \
-# 	&& ./scripts/get-env.sh ./scripts/test.sh
+# define behavior for; make AND make all
+all: run
+	@echo "  Waiting 1 minute before containers are up and running before testing" \
+	echo "NO TESTES IMPLEMENTED YET"
+	#&& sleep 10 \
+	#&& ./scripts/get-env.sh ./scripts/test.sh
 
 # just build
 build:

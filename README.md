@@ -22,6 +22,7 @@ Means that it is capable of running __multiple environments__ at the same time a
 * Mysql Client >=5.5
 * Netcat (nc)
 * Lynx
+* make
 
 * * *
 
@@ -52,13 +53,22 @@ And also a tag with __acquia-latest__ for easy use.
 
 ## [Quick Start](#quickstart)
 
-First of all, download the code from the __Acquia subscription__. We recommend using the path __/home/your-user/workspace__. Then, open a terminal go to the root of your subscription code and add Docker4Acquia as a GIT submodule with the command:
+First of all, download the code from __Acquia subscription GIT repository__.
+
+We recommend to adopt the path __/home/your-user/workspace__ as your workspace. Then, open a terminal go to the root of your subscription code, probably it is __/home/your-user/workspace/your-subscription__, and add Docker4Acquia as a GIT submodule with the command:
 
 ```
-# inside the folder /home/your-user/workspace/your-subscription
 git submodule add https://github.com/ciandt-dev/docker4acquia
 ```
-\**More information about GIT submodules can be found [here](https://git-scm.com/docs/git-submodule).*
+\**More information about how GIT submodules work can be found [here](https://git-scm.com/docs/git-submodule).*
+
+Simply start Docker4Acquia with __default parameters__:
+
+```
+make
+```
+
+You are ready to go, just follow the instructions on the screen.
 
 * * *
 
