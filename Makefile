@@ -5,7 +5,7 @@
 # define behavior for; make AND make all
 all: run
 	@echo "  Waiting 1 minute before containers are up and running before testing" \
-	&& @echo "NO TESTE IMPLEMENTED YET!"
+	&& echo "NO TESTE IMPLEMENTED YET!"
 
 #&& sleep 10 \
 #&& ./scripts/get-env.sh ./scripts/test.sh
