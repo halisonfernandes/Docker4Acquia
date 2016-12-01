@@ -54,6 +54,8 @@ And also a tag with __acquia-latest__ for easy use.
 
 TBW
 
+git submodule add https://github.com/ciandt-dev/Docker4Acquia
+
 * * *
 
 ## [Checking and testing](#checking-and-testing)
