@@ -133,36 +133,6 @@ make
 
 * * *
 
-## [Checking and testing](#checking-and-testing)
-
-### [*Cache*](#check-cache)
-
-```
-echo 'stats' | nc cache 11211
-```
-
-### [*Search*](#check-search)
-
-```
-lynx http://search:8983/solr
-```
-
-### [*Database*](#check-database)
-
-```
-mysql \
-  --host=database \
-  --user=root \
-  --pass=root
-```
-
-### [*Web*](#check-web)
-```
-lynx http://localhost/test.php
-```
-
-* * *
-
 ## [User Feedback](#user-feedback)
 
 ### [*Issues*](#issues)
