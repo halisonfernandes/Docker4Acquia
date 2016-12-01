@@ -14,6 +14,10 @@ set -e  #   errexit  - Abort script at first error, when a command exits with no
 DOCKER=$(which docker)
 NC=$(which nc)
 
+## variables
+# transform subscription to lower case
+export ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION,,}
+
 # simple tests start
 echo "  _______________________________________________________________________________"
 echo -e "\n  -- Docker Test \n\n  Please wait..."
