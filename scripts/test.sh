@@ -2,7 +2,8 @@
 
 : ' Tests running Docker containers
 
-    TODO: Improve tests, maybe try to use Behat as testing tool
+    TODO: Implent tests to other containers than memcached
+    TODO2: Improve tests, maybe try to use Behat as testing tool
     '
 
 # bash parameters
@@ -11,6 +12,7 @@ set -e  #   errexit  - Abort script at first error, when a command exits with no
 #set -x  #   xtrace   - Enable print commands and their arguments as they are executed.
 
 # binaries
+CURL=$(which curl)
 DOCKER=$(which docker)
 NC=$(which nc)
 
@@ -52,3 +54,6 @@ else
   exit 1
 
 fi
+
+# enable bash errexit
+set -e
