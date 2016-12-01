@@ -27,7 +27,7 @@ echo -e "\n  -- Docker Test \n\n  Please wait..."
 readonly DOCKER_MEMCACHED_CONTAINER_IP=$(\
   "${DOCKER}" inspect \
               --format \
-                "{{ .NetworkSettings.Networks.bridge.IPAddress }}" \
+                "{{ .NetworkSettings.Networks.${ACQUIA_SUBSCRIPTION}_default.IPAddress }}" \
               --type \
                 container \
               ""${ACQUIA_SUBSCRIPTION}-memcached"" \
