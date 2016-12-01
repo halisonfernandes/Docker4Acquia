@@ -20,12 +20,3 @@ export ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION,,}
     --file infrastructure/docker-compose.yaml \
     --project-name "${ACQUIA_SUBSCRIPTION}" \
     up
-
-
-# "${DOCKER}" run --name "${DOCKER_CONTAINER_NAME}" \
-#                 --tty \
-#                 --attach stdout \
-#                 --attach stderr \
-#                 --env-file \
-#                   "conf/"${APP_NAME}"."${ENVIRONMENT}".env" \
-#                 ""${DOCKER_IMAGE_NAME}":"${DOCKER_DEFAULT_TAG}""
