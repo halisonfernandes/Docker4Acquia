@@ -31,7 +31,7 @@ run: build
 # stop and remove containers, images
 clean:
 	@./scripts/get-env.sh ./scripts/clean.sh
-#
-# # stop and remove containers, images, dangling images and volumes
-# clean-all: clean
-# 	@./scripts/get-env.sh ./scripts/clean-all.sh
+
+# stop and remove containers, images, dangling images and volumes
+clean-all: clean
+	@./scripts/get-env.sh ./scripts/clean-all.sh
