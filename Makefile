@@ -1,14 +1,11 @@
 # define phony targets
-.PHONY: all build clean clean-all debug run shell
-	#   test
+.PHONY: all build clean clean-all debug run shell test
 
 # define behavior for; make AND make all
 all: run
 	@echo "  Waiting 1 minute before containers are up and running before testing" \
-	&& echo "  NO TESTS IMPLEMENTED YET!"
-
-#&& sleep 10 \
-#&& ./scripts/get-env.sh ./scripts/test.sh
+	&& sleep 10 \
+	&& ./scripts/get-env.sh ./scripts/test.sh
 
 # just build
 build:
@@ -18,10 +15,10 @@ build:
 run: build
 	@./scripts/get-env.sh ./scripts/run.sh
 
-# # perform tests
-# test:
-# 	@./scripts/get-env.sh ./scripts/test.sh
-#
+# perform tests
+test:
+	@./scripts/get-env.sh ./scripts/test.sh
+
 # build, run and attaches terminal with variables from .env file
 debug: build
 	@./scripts/get-env.sh ./scripts/debug.sh
