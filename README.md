@@ -2,7 +2,7 @@
 
 This project intends to be a containerized solution that mimics Acquia environment for multiple purposes.
 
-The source code is available under GPLv3 at Github in this [link]((https://github.com/ciandt-dev/Docker4Acquia/LICENSE).
+The source code is available under GPLv3 at Github in this [link](https://github.com/ciandt-dev/Docker4Acquia/blob/master/LICENSE).
 
 The solution utilizes the same versions of softwares, packages, modules and its underlying operating system as Acquia, we do our best effort to keep updated with the published platform infrastructure table on Acquia website: https://docs.acquia.com/cloud/arch/tech-platform.
 
