@@ -10,8 +10,10 @@ set -u  #   nounset  - Attempt to use undefined variable outputs error message, 
 
 # binaries
 DOCKER=$(which docker)
+TR=$(which tr)
 
 # variables
+export ACQUIA_SUBSCRIPTION=$("${TR}" '[:upper:]' '[:lower:]' <<< "${ACQUIA_SUBSCRIPTION}")
 SHELL_TYPE="bash"
 
 # shell message
