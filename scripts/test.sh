@@ -15,10 +15,11 @@ set -e  #   errexit  - Abort script at first error, when a command exits with no
 CURL=$(which curl)
 DOCKER=$(which docker)
 NC=$(which nc)
+TR=$(which tr)
 
 ## variables
 # transform subscription to lower case
-export ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION,,}
+export ACQUIA_SUBSCRIPTION=$("${TR}" '[:upper:]' '[:lower:]' <<< "${ACQUIA_SUBSCRIPTION}")
 
 # simple tests start
 echo "  _______________________________________________________________________________"

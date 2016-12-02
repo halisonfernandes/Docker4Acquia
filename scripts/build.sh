@@ -14,10 +14,11 @@ set -u  #   nounset  - Attempt to use undefined variable outputs error message, 
 # binaries
 CAT=$(which cat)
 DOCKER_COMPOSE=$(which docker-compose)
+TR=$(which tr)
 
 ## variables
 # transform subscription to lower case
-export ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION,,}
+export ACQUIA_SUBSCRIPTION=$("${TR}" '[:upper:]' '[:lower:]' <<< "${ACQUIA_SUBSCRIPTION}")
 
 "${CAT}" << EOM
   _______________________________________________________________________________
