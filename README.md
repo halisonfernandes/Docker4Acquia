@@ -66,6 +66,7 @@ Simply start Docker4Acquia with __default parameters__:
 
 ```
 cd docker4acquia
+git checkout dev
 make
 ```
 
@@ -89,7 +90,7 @@ make build
 make run
 ```
 
-### [*Test*](#how-to-test)
+### [*Test*](#how-to-test) - Perform tests on containers
 
 ```
 make test
