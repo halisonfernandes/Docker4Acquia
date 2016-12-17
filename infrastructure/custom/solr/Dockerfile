@@ -1,4 +1,4 @@
-FROM ciandtsoftware/solr:acquia-latest
+FROM ciandt/solr:acquia-latest
 
 # define Docker image label information
 LABEL com.ciandt.vendor="Custom Vendor" \

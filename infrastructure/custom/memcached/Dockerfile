@@ -1,4 +1,4 @@
-FROM ciandtsoftware/memcached:acquia-latest
+FROM ciandt/memcached:acquia-latest
 
 # define Docker image label information
 LABEL com.ciandt.vendor="Custom Vendor" \

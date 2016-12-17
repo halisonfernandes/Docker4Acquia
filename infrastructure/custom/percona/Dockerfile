@@ -1,4 +1,4 @@
-FROM ciandtsoftware/percona:acquia-latest
+FROM ciandt/percona:acquia-latest
 
 # define Docker image label information
 LABEL com.ciandt.vendor="Custom Vendor" \

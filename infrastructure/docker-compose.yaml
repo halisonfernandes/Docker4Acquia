@@ -3,7 +3,7 @@ services:
 
   cache:
     #build: ./custom/memcached
-    image: ciandtsoftware/memcached:acquia-latest
+    image: ciandt/memcached:acquia-latest
     container_name: ${ACQUIA_SUBSCRIPTION}-memcached
     env_file: ../conf/memcached.env
     tty: true
@@ -15,7 +15,7 @@ services:
 
   database:
     #build: ./custom/percona
-    image: ciandtsoftware/percona:acquia-latest
+    image: ciandt/percona:acquia-latest
     container_name: ${ACQUIA_SUBSCRIPTION}-percona
     env_file: ../conf/percona.env
     tty: true
@@ -33,7 +33,7 @@ services:
 
   search:
     #build: ./custom/solr
-    image: ciandtsoftware/solr:acquia-latest
+    image: ciandt/solr:acquia-latest
     container_name: ${ACQUIA_SUBSCRIPTION}-solr
     env_file: ../conf/solr.env
     tty: true
@@ -45,7 +45,7 @@ services:
 
   web:
     #build: ./custom/php
-    image: ciandtsoftware/php:acquia-latest
+    image: ciandt/php:acquia-latest
     container_name: ${ACQUIA_SUBSCRIPTION}-php
     env_file: ../conf/php.env
     tty: true

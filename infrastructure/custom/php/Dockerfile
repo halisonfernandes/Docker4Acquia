@@ -1,4 +1,4 @@
-FROM ciandtsoftware/php:acquia-latest
+FROM ciandt/php:acquia-latest
 
 # define Docker image label information
 LABEL com.ciandt.vendor="Custom Vendor" \
