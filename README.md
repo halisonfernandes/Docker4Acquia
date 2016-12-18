@@ -30,12 +30,12 @@ Means that it is capable of running __multiple environments__ at the same time a
 
 At this moment this solution already contains the following Docker images:
 
-| Docker-Compose | Docker Hub Image                                                               |  Port  |
-| -------------- | ------------------------------------------------------------------------------ | ------ |
-| cache          | [ciandtsoftware/memcached](https://hub.docker.com/r/ciandtsoftware/memcached)  | 11211  |
-| database       | [ciandtsoftware/percona](https://hub.docker.com/r/ciandtsoftware/percona)      | 3306   |
-| search         | [ciandtsoftware/solr](https://hub.docker.com/r/ciandtsoftware/solr)            | 8983   |
-| web            | [ciandtsoftware/php](https://hub.docker.com/r/ciandtsoftware/php)              | 80/443 |
+| Docker-Compose | Docker Hub Image                                              |  Port  |
+| -------------- | ------------------------------------------------------------- | ------ |
+| cache          | [ciandt/memcached](https://hub.docker.com/r/ciandt/memcached) | 11211  |
+| database       | [ciandt/percona](https://hub.docker.com/r/ciandt/percona)     | 3306   |
+| search         | [ciandt/solr](https://hub.docker.com/r/ciandt/solr)           | 8983   |
+| web            | [ciandt/php](https://hub.docker.com/r/ciandt/php)             | 80/443 |
 
 \**For specific software, OS, modules and libraries versions, please visit the refered Docker Image page*
 
