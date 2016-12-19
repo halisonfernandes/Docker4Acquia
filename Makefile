@@ -1,5 +1,5 @@
 # define phony targets
-.PHONY: all build clean clean-all debug run shell test proxy
+.PHONY: all build clean clean-all debug run shell test proxy windows mac
 
 # define behavior for; make AND make all
 all: run
@@ -38,3 +38,7 @@ clean-all: clean
 # spin-up a Nginx proxy
 proxy:
 	@./scripts/get-env.sh ./scripts/proxy.sh
+
+# run Docker4Acquia containers + Nginx proxy
+windows: run proxy
+mac: run proxy
