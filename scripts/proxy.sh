@@ -9,6 +9,7 @@ set -u  #   nounset  - Attempt to use undefined variable outputs error message, 
 #set -x  #   xtrace   - Enable print commands and their arguments as they are executed.
 
 # binaries
+CAT=$(which cat)
 DOCKER=$(which docker)
 DOCKER_COMPOSE=$(which docker-compose)
 TR=$(which tr)
@@ -17,23 +18,110 @@ TR=$(which tr)
 # transform subscription to lower case
 export ACQUIA_SUBSCRIPTION=$("${TR}" '[:upper:]' '[:lower:]' <<< "${ACQUIA_SUBSCRIPTION}")
 
+"${CAT}" << EOM
+  _______________________________________________________________________________
+
+                            Docker4Acquia project
+
+  -- Docker Pull
+
+  Pulling Docker image(s)
+
+EOM
+
 # pull images first, check for updated versions
 "${DOCKER_COMPOSE}" \
     --file infrastructure/proxy/docker-compose.yaml \
     --project-name "proxy" \
     pull
 
-# build
-"${DOCKER_COMPOSE}" \
-    --file infrastructure/proxy/docker-compose.yaml \
-    --project-name "proxy" \
-    build
+# print messages if docker pull was successful or not
+if [ $? -eq 0 ]; then
 
-# spin-up container
-"${DOCKER_COMPOSE}" \
-    --file infrastructure/proxy/docker-compose.yaml \
-    --project-name "proxy" \
-    up -d
+    "${CAT}" << EOM
+  _______________________________________________________________________________
+
+  -- Docker Build
+
+  Your Docker image(s) are built
+
+EOM
+
+  # build
+  "${DOCKER_COMPOSE}" \
+      --file infrastructure/proxy/docker-compose.yaml \
+      --project-name "proxy" \
+      build
+
+  # print messages if docker build was successful or not
+  if [ $? -eq 0 ]; then
+
+    "${CAT}" << EOM
+  _______________________________________________________________________________
+
+  -- Docker Run
+
+  Spinning-up Docker containers
+
+EOM
+
+    # spin-up container
+    "${DOCKER_COMPOSE}" \
+        --file infrastructure/proxy/docker-compose.yaml \
+        --project-name "proxy" \
+        up -d
+
+    # print messages if docker run was successful or not
+    if [ $? -ne 0 ]; then
+
+      "${CAT}" << EOM
+    _______________________________________________________________________________
+
+    -- Docker Run
+
+    ERROR!!
+    Something happened, your Docker image(s) were not built
+    _______________________________________________________________________________
+
+EOM
+
+      exit 1
+
+    fi
+
+  else
+
+    "${CAT}" << EOM
+  _______________________________________________________________________________
+
+  -- Docker Build
+
+  ERROR!!
+  Something happened, your Docker image(s) were not built
+  _______________________________________________________________________________
+
+EOM
+
+    exit 1
+
+  fi
+
+else
+
+  "${CAT}" << EOM
+  _______________________________________________________________________________
+
+  -- Docker Pull
+
+  ERROR!!
+  Something happened, could not pull images
+  _______________________________________________________________________________
+
+EOM
+
+  exit 1
+
+fi
 
 # connect nginx proxy to the project network
 "${DOCKER}" network connect ""${ACQUIA_SUBSCRIPTION}"_default" nginx
