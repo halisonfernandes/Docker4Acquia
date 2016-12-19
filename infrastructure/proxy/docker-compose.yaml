@@ -1,0 +1,19 @@
+version: '2'
+services:
+
+  proxy:
+    #build: ./custom/nginx
+    image: jwilder/nginx-proxy
+    container_name: nginx
+    env_file: ../../conf/nginx.env
+    tty: true
+    stdin_open: true
+    # limit memory to 1GB (value must be in bytes)
+    mem_limit: 1073741824
+    # limit swap to 2GB (value must be in bytes)
+    memswap_limit: 2147483648
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro

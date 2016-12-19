@@ -42,6 +42,9 @@ services:
     mem_limit: 268435456
     # limit swap to 512MB (value must be in bytes)
     memswap_limit: 536870912
+    environment:
+      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-solr.local
+      - VIRTUAL_PORT=8983
 
   web:
     #build: ./custom/php
@@ -56,6 +59,7 @@ services:
     memswap_limit: 2147483648
     environment:
       - ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION}
+      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-php.local
     links:
       - cache
       - search

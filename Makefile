@@ -1,5 +1,5 @@
 # define phony targets
-.PHONY: all build clean clean-all debug run shell test
+.PHONY: all build clean clean-all debug run shell test proxy
 
 # define behavior for; make AND make all
 all: run
@@ -34,3 +34,7 @@ clean:
 # stop and remove containers, images, dangling images and volumes
 clean-all: clean
 	@./scripts/get-env.sh ./scripts/clean-all.sh
+
+# spin-up a Nginx proxy
+proxy:
+	@./scripts/get-env.sh ./scripts/proxy.sh
