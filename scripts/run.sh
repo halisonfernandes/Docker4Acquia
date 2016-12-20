@@ -44,7 +44,7 @@ function get_docker_container_ip()
 ## flow
 # start message
 echo "  _______________________________________________________________________________"
-echo -en "\n  -- Docker run\n\n  Spinning-up Docker containers\n\n"
+echo -en "\n  -- Docker run\n\n  Spinning-up Docker container(s)\n\n"
 
 # spin-up containers
 "${DOCKER_COMPOSE}" \
