@@ -93,9 +93,9 @@ EOM
     sudo bash -c 'echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.local" >> /etc/hosts'
 
     -- Windows (prompt with administrator privileges)
-    echo "# Docker4Acquia project - ${ACQUIA_SUBSCRIPTION}" >> %WINDIR%\system32\drivers\etc\hosts
-    echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.local" >> %WINDIR%\system32\drivers\etc\hosts
-    echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.local" >> %WINDIR%\system32\drivers\etc\hosts
+    echo # Docker4Acquia project - ${ACQUIA_SUBSCRIPTION} >> %WINDIR%\system32\drivers\etc\hosts
+    echo 127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.local >> %WINDIR%\system32\drivers\etc\hosts
+    echo 127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.local >> %WINDIR%\system32\drivers\etc\hosts
 
 EOM
 
