@@ -1,5 +1,5 @@
 # define phony targets
-.PHONY: all build clean clean-all debug run shell test proxy windows mac
+.PHONY: all build clean clean-all debug run shell test proxy windows mac linux
 
 # define behavior for; make AND make all
 all: run
@@ -42,3 +42,6 @@ proxy:
 # run Docker4Acquia containers + Nginx proxy
 windows: run proxy
 mac: run proxy
+
+# alias for linux
+linux: all
