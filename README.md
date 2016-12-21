@@ -52,7 +52,7 @@ And also a tag with __acquia-latest__ for easy use.
 
 * * *
 
-## [Quick Start](#quickstart)
+## [Quick Start - Running default](#quickstart)
 
 First of all, download the code from __[Acquia subscription GIT repository](https://docs.acquia.com/cloud/manage/code/repository/git)__.
 
@@ -66,11 +66,60 @@ Simply start Docker4Acquia with __default parameters__:
 
 ```
 cd docker4acquia
-git checkout dev
 make linux # Change to mac OR windows according to your OS
 ```
 
 You are ready to go, just follow the instructions on the screen.
+
+* * *
+
+## [Customizing](#customizing)
+
+There are two options to customize Docker4Acquia to better suit your project needs.
+
+First one is to __[fork](https://help.github.com/articles/fork-a-repo/)__ Docker4Acquia. This is very usefull when you can have your code avaiable publicly on [Github](https://www.github.com). And the second one, is to donwload a [release of Docker4Acquia](https://github.com/ciandt-dev/Docker4Acquia/releases) and commit the modified code in your Acquia subscription GIT repository directly.
+
+Lets explore these two options in detail.
+
+### [*Fork*](#fork)
+
+Before starting any change, fork the project.
+In order to achieve it, please read Github official documentation about this topic [here](https://help.github.com/articles/fork-a-repo/).
+
+Then, download the code from your __[Acquia subscription GIT repository](https://docs.acquia.com/cloud/manage/code/repository/git)__.
+
+We recommend to adopt the path __/home/your-user/workspace__ as your workspace. Then, open a terminal go to the root of your subscription code, probably it is __/home/your-user/workspace/your-subscription__, and add your __Docker4Acquia fork__ as a __[GIT submodule](https://git-scm.com/docs/git-submodule)__ with the command:
+
+```
+git submodule add https://github.com/my-Org/my-Fork-Repo
+```
+
+Change anything you may need and remember to commit.
+
+Then, simply start Docker4Acquia with __custom parameters__:
+
+```
+cd docker4acquia
+make linux # Change to mac OR windows according to your OS
+```
+
+You are ready to go, just follow the instructions on the screen
+
+### [*Bundling in Acquia git*](#bundling-acquia-git)
+
+By any reason that your project may require to keep the code private, you can download the latest release of Docker4Acquia in [releases page](https://github.com/ciandt-dev/Docker4Acquia/releases) and customize it.
+For obvious reasons, we always recommend to use the newest version.
+
+Start by downloading the code from your __[Acquia subscription GIT repository](https://docs.acquia.com/cloud/manage/code/repository/git)__. We recommend to adopt the path __/home/your-user/workspace__ as your workspace.
+
+After, simply download the [Docke4Acquia release](https://github.com/ciandt-dev/Docker4Acquia/releases), decompress in the root of your Git repo and change anything your project needs.
+
+Then, just run Docker4Acquia
+```
+cd docker4acquia
+make linux # Change to mac OR windows according to your OS
+```
+You are ready to go, just follow the instructions on the screen
 
 * * *
 
