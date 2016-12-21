@@ -112,7 +112,7 @@ For obvious reasons, we always recommend to use the newest version.
 
 Start by downloading the code from your __[Acquia subscription GIT repository](https://docs.acquia.com/cloud/manage/code/repository/git)__. We recommend to adopt the path __/home/your-user/workspace__ as your workspace.
 
-After, simply download the [Docke4Acquia release](https://github.com/ciandt-dev/Docker4Acquia/releases), decompress in the root of your Git repo and change anything your project needs.
+After, simply download the [latest Docke4Acquia release](https://github.com/ciandt-dev/Docker4Acquia/releases/latest), decompress in the root of your Git repo and change anything your project need.
 
 Then, just run Docker4Acquia
 ```
