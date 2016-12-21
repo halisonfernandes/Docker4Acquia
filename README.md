@@ -67,7 +67,22 @@ Simply start Docker4Acquia with __default parameters__:
 ```
 cd docker4acquia
 git checkout dev
+```
+
+If you are on Linux just type:
+```
 make
+``
+
+If you are on Windows:
+```
+make windows
+```
+
+If you are on Mac:
+```
+make mac
+sudo echo /etc/hosts >> 127.0.0.1 mysubscription-solr.local mysubscription-php.local
 ```
 
 You are ready to go, just follow the instructions on the screen.
