@@ -16,13 +16,14 @@ Means that it is capable of running __multiple environments__ at the same time a
 
 ## [*Requirements*](#requirements)
 
-* __Any Linux OS__ *(Support for Mac/Windows will come soon)*
 * Docker Engine => 1.12
 * Docker Compose => 1.8.0
 * Mysql Client >=5.5
 * Netcat (nc)
 * Lynx
 * make
+
+__Note for Windows users:__ On Windows environments it is required to install Linux Bash for Windows, more information about it can be found [here](https://msdn.microsoft.com/en-us/commandline/wsl/about) and [here](http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/).
 
 * * *
 
@@ -61,28 +62,12 @@ We recommend to adopt the path __/home/your-user/workspace__ as your workspace. 
 git submodule add https://github.com/ciandt-dev/docker4acquia
 ```
 
-
 Simply start Docker4Acquia with __default parameters__:
 
 ```
 cd docker4acquia
 git checkout dev
-```
-
-If you are on Linux just type:
-```
-make
-```
-
-If you are on Windows:
-```
-make windows
-```
-
-If you are on Mac:
-```
-make mac
-sudo echo /etc/hosts >> 127.0.0.1 mysubscription-solr.local mysubscription-php.local
+make linux #change to mac OR windows according to your OS
 ```
 
 You are ready to go, just follow the instructions on the screen.
