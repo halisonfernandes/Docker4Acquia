@@ -69,6 +69,8 @@ if [ $? -eq 0 ]; then
 
   Your Docker containers are UP and RUNNING
 
+  - For Linux environments only!
+
   Solr is avaiable at:
   ${SOLR_IP}:8983
 
@@ -85,6 +87,7 @@ if [ $? -eq 0 ]; then
   If you prefer to use hostname instead, please add it to your hosts file
   Just copy and paste the commands below in your terminal or add it manually later
 
+  sudo bash -c 'echo "# Docker4Acquia project - ${ACQUIA_SUBSCRIPTION}" >> /etc/hosts'
   sudo bash -c 'echo "${SOLR_IP} ${ACQUIA_SUBSCRIPTION}-solr.local" >> /etc/hosts'
   sudo bash -c 'echo "${MEMCACHED_IP} ${ACQUIA_SUBSCRIPTION}-memcached.local" >> /etc/hosts'
   sudo bash -c 'echo "${PERCONA_IP} ${ACQUIA_SUBSCRIPTION}-percona.local" >> /etc/hosts'

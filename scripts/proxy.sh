@@ -12,6 +12,7 @@ set -u  #   nounset  - Attempt to use undefined variable outputs error message, 
 CAT=$(which cat)
 DOCKER=$(which docker)
 DOCKER_COMPOSE=$(which docker-compose)
+DOCKER_MACHINE=$(which docker-machine)
 TR=$(which tr)
 
 ## variables
@@ -21,7 +22,7 @@ export ACQUIA_SUBSCRIPTION=$("${TR}" '[:upper:]' '[:lower:]' <<< "${ACQUIA_SUBSC
 "${CAT}" << EOM
   _______________________________________________________________________________
 
-                            Docker4Acquia project
+                  Docker4Acquia project - Mac/Win support
 
   -- Docker Pull
 
@@ -70,6 +71,33 @@ EOM
         --file infrastructure/proxy/docker-compose.yaml \
         --project-name "proxy" \
         up -d
+
+    # print usage message
+    "${CAT}" << EOM
+  _______________________________________________________________________________
+
+    Your Docker Nginx proxy container is UP and RUNNING
+
+    - For Mac/Windows environments only!
+
+    Please, add these entries in your hosts file
+
+    127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.local
+    127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.local
+
+    It can be done manually or if you prefer, just copy and paste the commands below:
+
+    -- Mac
+    sudo bash -c 'echo "# Docker4Acquia project - ${ACQUIA_SUBSCRIPTION}" >> /etc/hosts'
+    sudo bash -c 'echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.local" >> /etc/hosts'
+    sudo bash -c 'echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.local" >> /etc/hosts'
+
+    -- Windows (prompt with administrator privileges)
+    echo "# Docker4Acquia project - ${ACQUIA_SUBSCRIPTION}" >> %WINDIR%\system32\drivers\etc\hosts
+    echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.local" >> %WINDIR%\system32\drivers\etc\hosts
+    echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.local" >> %WINDIR%\system32\drivers\etc\hosts
+
+EOM
 
     # print messages if docker run was successful or not
     if [ $? -ne 0 ]; then
@@ -124,4 +152,4 @@ EOM
 fi
 
 # connect nginx proxy to the project network
-"${DOCKER}" network connect ""${ACQUIA_SUBSCRIPTION}"_default" nginx
+"${DOCKER}" network connect ""${ACQUIA_SUBSCRIPTION}"_default" nginx >/dev/null 2>&1 # hence the command still not support -f (force), ignoring the output
