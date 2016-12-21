@@ -23,7 +23,7 @@ Means that it is capable of running __multiple environments__ at the same time a
 * Lynx
 * make
 
-__Note for Windows users:__ On Windows environments it is required to install Linux Bash for Windows, more information about it can be found [here](https://msdn.microsoft.com/en-us/commandline/wsl/about) and [here](http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/).
+__Note for Windows users:__ On Windows environments it is also required to install Linux Bash for Windows, more information about it can be found [here](https://msdn.microsoft.com/en-us/commandline/wsl/about) and [here](http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/).
 
 * * *
 
@@ -67,7 +67,7 @@ Simply start Docker4Acquia with __default parameters__:
 ```
 cd docker4acquia
 git checkout dev
-make linux #change to mac OR windows according to your OS
+make linux # Change to mac OR windows according to your OS
 ```
 
 You are ready to go, just follow the instructions on the screen.
