@@ -72,7 +72,7 @@ git checkout dev
 If you are on Linux just type:
 ```
 make
-``
+```
 
 If you are on Windows:
 ```
