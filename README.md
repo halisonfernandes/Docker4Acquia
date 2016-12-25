@@ -44,11 +44,11 @@ At this moment this solution already contains the following Docker images:
 
 ## [Versioning](#versioning)
 
-Github repo will have the following name pattern;
+Github repo will have the following pattern;
 
-> __acquia-*YYYY-MM-DD*__
+> __*YYYY-MM-DD*__
 
-And also a tag with __acquia-latest__ for easy use.
+And also it is always available the latest version though this [link](https://github.com/ciandt-dev/Docker4Acquia/releases/latest).
 
 * * *
 
@@ -120,6 +120,8 @@ cd docker4acquia
 make linux # Change to mac OR windows according to your OS
 ```
 You are ready to go, just follow the instructions on the screen
+
+* * *
 
 ### [*.gitignore*](#gitignore)
 
