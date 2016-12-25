@@ -129,10 +129,11 @@ Nevertheless, remember to include Docker4Acquia folder in your __.gitignore__ fi
 
 * * *
 
-### [*Changing parameters*](#changing-parameters)
+### [*.env - Changing parameters*](#changing-parameters)
 
-There is an __.env__ file in the root of Docker4Acquia.
-This file has several entries that can help customize your environment.
+There is an __.env__ file in the root of Docker4Acquia that can help tune Docker4Acquia in your project.
+
+This file has several entries, better explained as follows.
 
 * * *
 
