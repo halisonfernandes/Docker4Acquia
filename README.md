@@ -44,15 +44,15 @@ At this moment this solution already contains the following Docker images:
 
 ## [Versioning](#versioning)
 
-Github repo will have the following name pattern;
+Github repo will have the following pattern;
 
-> __acquia-*YYYY-MM-DD*__
+> __*YYYY-MM-DD*__
 
-And also a tag with __acquia-latest__ for easy use.
+And also it is always available the latest version though this [link](https://github.com/ciandt-dev/Docker4Acquia/releases/latest).
 
 * * *
 
-## [Quick Start - Running default](#quickstart)
+## [Quick Start - Running with default configurations](#quickstart)
 
 First of all, download the code from __[Acquia subscription GIT repository](https://docs.acquia.com/cloud/manage/code/repository/git)__.
 
@@ -123,11 +123,85 @@ You are ready to go, just follow the instructions on the screen
 
 * * *
 
+### [*.gitignore*](#gitignore)
+
+Hence your project is already hosted on Acquia platform there is no need to commit Docker4Acquia files other than __dev__ branch.
+
+Nevertheless, remember to include Docker4Acquia folder in your __.gitignore__ file in __stage__ and __master__ (production) branches.
+
+* * *
+
+### [*.env - Changing parameters*](#changing-parameters)
+
+There is an __.env__ file in the root of Docker4Acquia that can help tune Docker4Acquia in your project.
+
+This file has several entries, better explained as follows.
+
+* * *
+
+### [*Using custom Docker Images*](#custom-docker-images)
+
+#### [*Building*](#custom-docker-images-build)
+
+Every Docker Image in this project is prepared to be customized to better fit any project requirements.
+
+Let's suppose that your project needs a custom version of Memcached image for example.
+
+First of all, open the file __infrastructure/docker-compose.yaml__, uncomment the build line and comment the image line.
+
+From this:
+
+```
+#build: ./custom/memcached
+image: ciandt/memcached:acquia-latest
+```
+
+To this:
+
+```
+build: ./custom/memcached
+#image: ciandt/memcached:acquia-latest
+```
+
+After changing the docker-compose.yaml file just change the __infrastructure/custom/memcached/Dockerfile__ to customize your Memcached with everything that your project may need.
+
+To check if your Docker Image is building appropriately, simply run:
+
+```
+make build
+```
+
+If the build has run properly you are ready to go and use your own custom Docker Image.
+
+#### [*Your own Docker Hub hosted image*](#custom-docker-images-byoi)
+
+If your project already have a public Docker Hub image and you want to use instead of the default Docker4Acquia one, just simply open the __infrastructure/docker-compose.yaml__ and change to your own.
+
+Let's suppose that you are changing Solr image.
+
+From this:
+
+```
+image: ciandt/solr:acquia-latest
+```
+
+To this:
+
+```
+image: my-Docker-Hub-repo/my-Image:latest
+```
+
+Then you can use the bundled make commands to run and test with your Docker Image.
+
+* * *
+
 ## [How-to](#how-to)
 
 It is possible to perform any of the actions described below:
 
 ### [*Build*](#how-to-build)
+
+Build Docker images
 
 ```
 make build
@@ -135,11 +209,15 @@ make build
 
 ### [*Run*](#how-to-run)
 
+Build Docker images and run Docker Containers based on built Docker images
+
 ```
 make run
 ```
 
-### [*Test*](#how-to-test) - Perform tests on containers
+### [*Test*](#how-to-test)
+
+Perform some tests on runnning Docker containers (requires run first)
 
 ```
 make test
@@ -147,11 +225,15 @@ make test
 
 ### [*Debug*](#how-to-debug)
 
+Build Docker images, run Docker Containers based on built Docker images and attaches output to current shell
+
 ```
 make debug
 ```
 
 ### [*Shell access*](#how-to-shell)
+
+Build Docker images, run Docker Containers based on built Docker images and attaches to PHP container bash
 
 ```
 make shell
@@ -159,17 +241,23 @@ make shell
 
 ### [*Clean*](#how-to-clean)
 
+Stop running Docker containers, remove the containers and Docker network
+
 ```
 make clean
 ```
 
 ### [*Clean All*](#how-to-clean-all)
 
+Stop running Docker containers, remove the containers, delete Docker images and Docker network
+
 ```
 make clean-all
 ```
 
-### [*All - Build / Run / Test*](#how-to-all)
+### [*All*](#how-to-all)
+
+Build Docker images, run Docker Containers based on built Docker images and perform tests
 
 ```
 make all
@@ -179,6 +267,39 @@ make all
 
 ```
 make
+```
+
+### [*Proxy*](#how-to-proxy)
+
+Creates a Nginx proxy that exposes the HTTP and HTTPS port and redirects to Docker4Acquia containers, it is used for MacOS and Windows compatibity hence they work differently of Linux.
+More information about the proxy can be found [here](https://github.com/jwilder/nginx-proxy).
+
+```
+make proxy
+```
+
+### [*Linux*](#how-to-linux)
+
+Same as make all
+
+```
+make linux
+```
+
+### [*Mac*](#how-to-mac)
+
+Same as build, run and proxy
+
+```
+make mac
+```
+
+### [*Windows - Same as build, run and proxy*](#how-to-windows)
+
+Same as build, run and proxy
+
+```
+make windows
 ```
 
 * * *
