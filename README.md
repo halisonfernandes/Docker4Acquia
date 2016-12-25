@@ -129,17 +129,23 @@ It is possible to perform any of the actions described below:
 
 ### [*Build*](#how-to-build)
 
+Build Docker images
+
 ```
 make build
 ```
 
 ### [*Run*](#how-to-run)
 
+Build Docker images and run Docker Containers based on built Docker images
+
 ```
 make run
 ```
 
-### [*Test*](#how-to-test) - Perform tests on containers
+### [*Test*](#how-to-test)
+
+Perform some tests on runnning Docker containers (requires run first)
 
 ```
 make test
@@ -147,11 +153,15 @@ make test
 
 ### [*Debug*](#how-to-debug)
 
+Build Docker images, run Docker Containers based on built Docker images and attaches output to current shell
+
 ```
 make debug
 ```
 
 ### [*Shell access*](#how-to-shell)
+
+Build Docker images, run Docker Containers based on built Docker images and attaches to PHP container bash
 
 ```
 make shell
@@ -159,17 +169,23 @@ make shell
 
 ### [*Clean*](#how-to-clean)
 
+Stop running Docker containers, remove the containers and Docker network
+
 ```
 make clean
 ```
 
 ### [*Clean All*](#how-to-clean-all)
 
+Stop running Docker containers, remove the containers, delete Docker images and Docker network
+
 ```
 make clean-all
 ```
 
-### [*All - Build / Run / Test*](#how-to-all)
+### [*All*](#how-to-all)
+
+Build Docker images, run Docker Containers based on built Docker images and perform tests
 
 ```
 make all
@@ -179,6 +195,39 @@ make all
 
 ```
 make
+```
+
+### [*Proxy*](#how-to-proxy)
+
+Creates a Nginx proxy that exposes the HTTP and HTTPS port and redirects to Docker4Acquia containers, it is used for MacOS and Windows compatibity hence they work differently of Linux.
+More information about the proxy can be found [here](https://github.com/jwilder/nginx-proxy).
+
+```
+make proxy
+```
+
+### [*Linux*](#how-to-linux)
+
+Same as make all
+
+```
+make linux
+```
+
+### [*Mac*](#how-to-mac)
+
+Same as build, run and proxy
+
+```
+make mac
+```
+
+### [*Windows - Same as build, run and proxy*](#how-to-windows)
+
+Same as build, run and proxy
+
+```
+make windows
 ```
 
 * * *
