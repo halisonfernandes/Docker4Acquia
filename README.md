@@ -52,7 +52,7 @@ And also a tag with __acquia-latest__ for easy use.
 
 * * *
 
-## [Quick Start - Running default](#quickstart)
+## [Quick Start - Running with default configurations](#quickstart)
 
 First of all, download the code from __[Acquia subscription GIT repository](https://docs.acquia.com/cloud/manage/code/repository/git)__.
 
@@ -120,6 +120,65 @@ cd docker4acquia
 make linux # Change to mac OR windows according to your OS
 ```
 You are ready to go, just follow the instructions on the screen
+
+### [*Changing parameters*](#changing-parameters)
+
+There is an __.env__ file in the root of Docker4Acquia.
+This file has several entries that can help customize your environment.
+
+### [*Using custom Docker Images*](#custom-docker-images)
+
+#### [*Building*](#custom-docker-images-build)
+
+Every Docker Image in this project is prepared to be customized to better fit any project requirements.
+
+Let's suppose that your project needs a custom version of Memcached image for example.
+
+First of all, open the file __infrastructure/docker-compose.yaml__, uncomment the build line and comment the image line.
+
+From this:
+
+```
+#build: ./custom/memcached
+image: ciandt/memcached:acquia-latest
+```
+
+To this:
+
+```
+build: ./custom/memcached
+#image: ciandt/memcached:acquia-latest
+```
+
+After changing the docker-compose.yaml file just change the __infrastructure/custom/memcached/Dockerfile__ to customize your Memcached with everything that your project may need.
+
+To check if your Docker Image is building appropriately, simply run:
+
+```
+make build
+```
+
+If the build has run properly you are ready to go and use your own custom Docker Image.
+
+#### [*Your own Docker Hub hosted image*](#custom-docker-images-byoi)
+
+If your project already have a public Docker Hub image and you want to use instead of the default Docker4Acquia one, just simply open the __infrastructure/docker-compose.yaml__ and change to your own.
+
+Let's suppose that you are changing Solr image.
+
+From this:
+
+```
+image: ciandt/solr:acquia-latest
+```
+
+To this:
+
+```
+image: my-Docker-Hub-repo/my-Image:latest
+```
+
+Then you can use the bundled make commands to run and test with your Docker Image.
 
 * * *
 
