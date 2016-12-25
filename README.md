@@ -121,10 +121,20 @@ make linux # Change to mac OR windows according to your OS
 ```
 You are ready to go, just follow the instructions on the screen
 
+### [*.gitignore*](#gitignore)
+
+Hence your project is already hosted on Acquia platform there is no need to commit Docker4Acquia files other than __dev__ branch.
+
+Nevertheless, remember to include Docker4Acquia folder in your __.gitignore__ file in __stage__ and __master__ (production) branches.
+
+* * *
+
 ### [*Changing parameters*](#changing-parameters)
 
 There is an __.env__ file in the root of Docker4Acquia.
 This file has several entries that can help customize your environment.
+
+* * *
 
 ### [*Using custom Docker Images*](#custom-docker-images)
 
