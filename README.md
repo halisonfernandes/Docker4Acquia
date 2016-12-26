@@ -1,16 +1,16 @@
-# CI&T Docker4Acquia project
+# Docker4Acquia
 
 This project intends to be a containerized solution that mimics Acquia environment for multiple purposes.
 
-The source code is available under GPLv3 at Github in this [link](https://github.com/ciandt-dev/Docker4Acquia/blob/master/LICENSE).
+The source code is available under GPLv3 at GitHub in this [link](https://github.com/ciandt-dev/Docker4Acquia/blob/master/LICENSE).
 
-The solution utilizes the same versions of softwares, packages, modules and its underlying operating system as Acquia, we do our best effort to keep updated with the published platform infrastructure table on Acquia website: https://docs.acquia.com/cloud/arch/tech-platform.
+The solution utilizes the same versions of softwares, packages, modules and underlying operating system as Acquia. We do our best efforts to keep it updated according to the published platform infrastructure table from Acquia's website: https://docs.acquia.com/cloud/arch/tech-platform.
 
-By utilizing Docker technologies, that already provides an easy way of spinning up new environments along with its dependecies. This image can speed up developers which different backgrounds and equipments to create quickly a new local environment allowing them to easily integrate in automated tests and deployment pipelines.
+By leveraging Docker technologies, Docker4Acquia provides an easy way of spinning up new environments along with its dependencies. This image can speed up a developer's onboarding time, despite his/her backgrounds and equipments, and quickly create a new local environment allowing them to easily integrate in automated tests and deployment pipelines.
 
-Per design this solution will treat each Docker4Acquia running as a __Acquia subscription__, *what does it mean?*
+Per design this solution will treat each Docker4Acquia instance/copy running as a __Acquia subscription__, *what does it mean?*
 
-Means that it is capable of running __multiple environments__ at the same time and each one of them are __isolated__ one from another.
+It means that it's capable of running __multiple environments__ at the same time and each one of them are __isolated__ one from another.
 
 * * *
 
@@ -44,7 +44,7 @@ At this moment this solution already contains the following Docker images:
 
 ## [Versioning](#versioning)
 
-Github repo will have the following pattern;
+GitHub repo will have the following pattern;
 
 > __*YYYY-MM-DD*__
 
