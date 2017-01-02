@@ -33,7 +33,7 @@ readonly DOCKER_MEMCACHED_CONTAINER_IP=$(\
                 "{{ .NetworkSettings.Networks.${ACQUIA_SUBSCRIPTION}_default.IPAddress }}" \
               --type \
                 container \
-              ""${ACQUIA_SUBSCRIPTION}-memcached"" \
+              ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"" \
               )
 
 # disable bash errexit
@@ -45,12 +45,12 @@ echo "version" | "${NC}" "${DOCKER_MEMCACHED_CONTAINER_IP}" "11211" > /dev/null
 # check if was OK
 if [ $? -eq 0 ]; then
 
-  echo -e "\n  Docker container "${ACQUIA_SUBSCRIPTION}-memcached" service port 11211: OK!"
+  echo -e "\n  Docker container "${ACQUIA_SUBSCRIPTION}-memcached."${ENVIRONMENT}"" service port 11211: OK!"
   echo -e "\n  _______________________________________________________________________________\n"
 
 else
 
-  echo -e "\n  ERROR! Docker container "${ACQUIA_SUBSCRIPTION}-memcached" service port 11211: NOK!"
+  echo -e "\n  ERROR! Docker container "${ACQUIA_SUBSCRIPTION}-memcached."${ENVIRONMENT}"" service port 11211: NOK!"
   echo -e "\n  _______________________________________________________________________________\n"
   exit 1
 

@@ -59,10 +59,10 @@ if [ $? -eq 0 ]; then
   set -e  #   errexit  - Abort script at first error, when a command exits with non-zero status (except in until or while loops, if-tests, list constructs)
 
   # collect IPs
-  SOLR_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-solr")
-  MEMCACHED_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-memcached")
-  PERCONA_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-percona")
-  PHP_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-php")
+  SOLR_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"")
+  MEMCACHED_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"")
+  PERCONA_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-percona."${ENVIRONMENT}"")
+  PHP_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-php."${ENVIRONMENT}"")
 
 "${CAT}" << EOM
   _______________________________________________________________________________
@@ -95,11 +95,11 @@ if [ $? -eq 0 ]; then
 
   THEN, will be able to access at:
 
-  ${ACQUIA_SUBSCRIPTION}-solr.local:9398
-  ${ACQUIA_SUBSCRIPTION}-memcached.local:11211
-  ${ACQUIA_SUBSCRIPTION}-percona.local:3306
-  ${ACQUIA_SUBSCRIPTION}-php.local:80
-  ${ACQUIA_SUBSCRIPTION}-php.local:443
+  ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}:9398
+  ${ACQUIA_SUBSCRIPTION}-memcached.${ENVIRONMENT}:11211
+  ${ACQUIA_SUBSCRIPTION}-percona.${ENVIRONMENT}:3306
+  ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}:80
+  ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}:443
 
   _______________________________________________________________________________
 

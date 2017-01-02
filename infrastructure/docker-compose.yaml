@@ -4,7 +4,7 @@ services:
   cache:
     #build: ./custom/memcached
     image: ciandt/memcached:acquia-latest
-    container_name: ${ACQUIA_SUBSCRIPTION}-memcached
+    container_name: ${ACQUIA_SUBSCRIPTION}-memcached.${ENVIRONMENT}
     env_file: ../conf/memcached.env
     tty: true
     stdin_open: true
@@ -16,7 +16,7 @@ services:
   database:
     #build: ./custom/percona
     image: ciandt/percona:acquia-latest
-    container_name: ${ACQUIA_SUBSCRIPTION}-percona
+    container_name: ${ACQUIA_SUBSCRIPTION}-percona.${ENVIRONMENT}
     env_file: ../conf/percona.env
     tty: true
     stdin_open: true
@@ -34,7 +34,7 @@ services:
   search:
     #build: ./custom/solr
     image: ciandt/solr:acquia-latest
-    container_name: ${ACQUIA_SUBSCRIPTION}-solr
+    container_name: ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
     env_file: ../conf/solr.env
     tty: true
     stdin_open: true
@@ -43,13 +43,13 @@ services:
     # limit swap to 512MB (value must be in bytes)
     memswap_limit: 536870912
     environment:
-      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-solr.local
+      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
       - VIRTUAL_PORT=8983
 
   web:
     #build: ./custom/php
     image: ciandt/php:acquia-latest
-    container_name: ${ACQUIA_SUBSCRIPTION}-php
+    container_name: ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}
     env_file: ../conf/php.env
     tty: true
     stdin_open: true
@@ -59,7 +59,7 @@ services:
     memswap_limit: 2147483648
     environment:
       - ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION}
-      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-php.local
+      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}
     links:
       - cache
       - search
