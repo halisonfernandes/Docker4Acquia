@@ -23,5 +23,5 @@ echo -e "\n  Connecting to Apache/PHP Docker container shell...\n"
 "${DOCKER}" exec \
             --interactive \
             --tty \
-            ""${ACQUIA_SUBSCRIPTION}"-php" \
+            ""${ACQUIA_SUBSCRIPTION}"-php."${ENVIRONMENT}"" \
             "${SHELL_TYPE}"
