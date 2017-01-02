@@ -4,8 +4,8 @@ services:
   cache:
     #build: ./custom/memcached
     image: ciandt/memcached:acquia-latest
-    container_name: ${ACQUIA_SUBSCRIPTION}-memcached
-    env_file: ../conf/memcached.env
+    container_name: ${ACQUIA_SUBSCRIPTION}-memcached.${ENVIRONMENT}
+    env_file: ${ENV_FILES_FOLDER}/memcached.env
     tty: true
     stdin_open: true
     # limit memory to 64MB (value must be in bytes)
@@ -16,8 +16,8 @@ services:
   database:
     #build: ./custom/percona
     image: ciandt/percona:acquia-latest
-    container_name: ${ACQUIA_SUBSCRIPTION}-percona
-    env_file: ../conf/percona.env
+    container_name: ${ACQUIA_SUBSCRIPTION}-percona.${ENVIRONMENT}
+    env_file: ${ENV_FILES_FOLDER}/percona.env
     tty: true
     stdin_open: true
     # limit memory to 1GB (value must be in bytes)
@@ -34,8 +34,8 @@ services:
   search:
     #build: ./custom/solr
     image: ciandt/solr:acquia-latest
-    container_name: ${ACQUIA_SUBSCRIPTION}-solr
-    env_file: ../conf/solr.env
+    container_name: ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
+    env_file: ${ENV_FILES_FOLDER}/solr.env
     tty: true
     stdin_open: true
     # limit memory to 256MB (value must be in bytes)
@@ -43,14 +43,14 @@ services:
     # limit swap to 512MB (value must be in bytes)
     memswap_limit: 536870912
     environment:
-      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-solr.local
+      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
       - VIRTUAL_PORT=8983
 
   web:
     #build: ./custom/php
     image: ciandt/php:acquia-latest
-    container_name: ${ACQUIA_SUBSCRIPTION}-php
-    env_file: ../conf/php.env
+    container_name: ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}
+    env_file: ${ENV_FILES_FOLDER}/php.env
     tty: true
     stdin_open: true
     # limit memory to 1GB (value must be in bytes)
@@ -59,7 +59,7 @@ services:
     memswap_limit: 2147483648
     environment:
       - ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION}
-      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-php.local
+      - VIRTUAL_HOST=${URLS}
     links:
       - cache
       - search

@@ -5,7 +5,7 @@ services:
     #build: ./custom/nginx
     image: jwilder/nginx-proxy
     container_name: nginx
-    env_file: ../../conf/nginx.env
+    env_file: ../${ENV_FILES_FOLDER}/nginx.env
     tty: true
     stdin_open: true
     # limit memory to 1GB (value must be in bytes)
