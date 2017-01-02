@@ -5,7 +5,7 @@ services:
     #build: ./custom/memcached
     image: ciandt/memcached:acquia-latest
     container_name: ${ACQUIA_SUBSCRIPTION}-memcached.${ENVIRONMENT}
-    env_file: ${ENV_FILES_FOLDER}/memcached.env
+    # env_file: ${ENV_FILES_FOLDER}/memcached.env
     tty: true
     stdin_open: true
     # limit memory to 64MB (value must be in bytes)
@@ -13,29 +13,29 @@ services:
     # limit swap to 128MB (value must be in bytes)
     memswap_limit: 134217728
 
-  database:
-    #build: ./custom/percona
-    image: ciandt/percona:acquia-latest
-    container_name: ${ACQUIA_SUBSCRIPTION}-percona.${ENVIRONMENT}
-    env_file: ${ENV_FILES_FOLDER}/percona.env
-    tty: true
-    stdin_open: true
-    # limit memory to 1GB (value must be in bytes)
-    mem_limit: 1073741824
-    # limit swap to 2GB (value must be in bytes)
-    memswap_limit: 2147483648
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${ACQUIA_SUBSCRIPTION}
-    volumes:
-      # mount database store
-      - ${DATABASE_FOLDER}:/var/lib/mysql
+  # database:
+  #   #build: ./custom/percona
+  #   image: ciandt/percona:acquia-latest
+  #   container_name: ${ACQUIA_SUBSCRIPTION}-percona.${ENVIRONMENT}
+    # env_file: ${ENV_FILES_FOLDER}/percona.env
+  #   tty: true
+  #   stdin_open: true
+  #   # limit memory to 1GB (value must be in bytes)
+  #   mem_limit: 1073741824
+  #   # limit swap to 2GB (value must be in bytes)
+  #   memswap_limit: 2147483648
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  #     - MYSQL_DATABASE=${ACQUIA_SUBSCRIPTION}
+  #   volumes:
+  #     # mount database store
+  #     - ${DATABASE_FOLDER}:/var/lib/mysql
 
   search:
     #build: ./custom/solr
     image: ciandt/solr:acquia-latest
     container_name: ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
-    env_file: ${ENV_FILES_FOLDER}/solr.env
+    # env_file: ${ENV_FILES_FOLDER}/solr.env
     tty: true
     stdin_open: true
     # limit memory to 256MB (value must be in bytes)
@@ -50,7 +50,7 @@ services:
     #build: ./custom/php
     image: ciandt/php:acquia-latest
     container_name: ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}
-    env_file: ${ENV_FILES_FOLDER}/php.env
+    # env_file: ${ENV_FILES_FOLDER}/php.env
     tty: true
     stdin_open: true
     # limit memory to 1GB (value must be in bytes)
@@ -63,7 +63,7 @@ services:
     links:
       - cache
       - search
-      - database
+      # - database
     volumes:
       # mount files
       - ${FILES_FOLDER}:/mnt/gfs/${ACQUIA_SUBSCRIPTION}dev
