@@ -59,7 +59,7 @@ services:
     memswap_limit: 2147483648
     environment:
       - ACQUIA_SUBSCRIPTION=${ACQUIA_SUBSCRIPTION}
-      - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}
+      - VIRTUAL_HOST=${URLS}
     links:
       - cache
       - search
