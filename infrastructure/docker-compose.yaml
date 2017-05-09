@@ -51,6 +51,8 @@ services:
     image: ciandt/php:acquia-latest
     container_name: ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}
     env_file: ${ENV_FILES_FOLDER}/php.env
+    # required to run NFS share and some other commands (only to be used in non-production environment)
+    privileged: true
     tty: true
     stdin_open: true
     # limit memory to 1GB (value must be in bytes)
