@@ -70,3 +70,7 @@ services:
       - ${FILES_FOLDER}:/mnt/gfs/${ACQUIA_SUBSCRIPTION}.dev
       # mount code
       - ${CODE_FOLDER}:/var/www/html
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}
