@@ -83,6 +83,7 @@ EOM
     Please, add these entries in your hosts file
 
     127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
+    127.0.0.1 ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}
     127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}
 
     It can be done manually or if you prefer, just copy and paste the commands below:
@@ -90,11 +91,13 @@ EOM
     -- Mac
     sudo bash -c 'echo "# Docker4Acquia project - ${ACQUIA_SUBSCRIPTION}" >> /etc/hosts'
     sudo bash -c 'echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}" >> /etc/hosts'
+    sudo bash -c 'echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}" >> /etc/hosts'
     sudo bash -c 'echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}" >> /etc/hosts'
 
     -- Windows (prompt with administrator privileges)
     echo # Docker4Acquia project - ${ACQUIA_SUBSCRIPTION} >> %WINDIR%\system32\drivers\etc\hosts
     echo 127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT} >> %WINDIR%\system32\drivers\etc\hosts
+    echo 127.0.0.1 ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT} >> %WINDIR%\system32\drivers\etc\hosts
     echo 127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT} >> %WINDIR%\system32\drivers\etc\hosts
 
 EOM
