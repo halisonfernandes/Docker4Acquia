@@ -60,6 +60,7 @@ if [ $? -eq 0 ]; then
 
   # collect IPs
   SOLR_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"")
+  MAIL_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-mail."${ENVIRONMENT}"")
   MEMCACHED_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"")
   PERCONA_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-percona."${ENVIRONMENT}"")
   PHP_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-php."${ENVIRONMENT}"")
@@ -77,6 +78,9 @@ if [ $? -eq 0 ]; then
   Memcached is avaiable at:
   ${MEMCACHED_IP}:11211
 
+  Mailhog is avaiable at:
+  ${MAIL_IP}:8025
+
   Percona (MySQL) is avaiable at:
   ${PERCONA_IP}:3306
 
@@ -89,6 +93,7 @@ if [ $? -eq 0 ]; then
 
   sudo bash -c 'echo "# Docker4Acquia project - ${ACQUIA_SUBSCRIPTION}" >> /etc/hosts'
   sudo bash -c 'echo "${SOLR_IP} ${ACQUIA_SUBSCRIPTION}-solr.local" >> /etc/hosts'
+  sudo bash -c 'echo "${MAIL_IP} ${ACQUIA_SUBSCRIPTION}-mail.local" >> /etc/hosts'
   sudo bash -c 'echo "${MEMCACHED_IP} ${ACQUIA_SUBSCRIPTION}-memcached.local" >> /etc/hosts'
   sudo bash -c 'echo "${PERCONA_IP} ${ACQUIA_SUBSCRIPTION}-percona.local" >> /etc/hosts'
   sudo bash -c 'echo "${PHP_IP} ${ACQUIA_SUBSCRIPTION}-php.local" >> /etc/hosts'
@@ -96,6 +101,7 @@ if [ $? -eq 0 ]; then
   THEN, will be able to access at:
 
   ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}:9398
+  ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}:8025
   ${ACQUIA_SUBSCRIPTION}-memcached.${ENVIRONMENT}:11211
   ${ACQUIA_SUBSCRIPTION}-percona.${ENVIRONMENT}:3306
   ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}:80
