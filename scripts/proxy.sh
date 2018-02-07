@@ -72,34 +72,27 @@ EOM
         --project-name "proxy" \
         up -d
 
+    IFS=',' read -r -a _URLS <<< "${URLS}"
+    PHP_URLS='';
+    for url in "${_URLS[@]}"; do
+      PHP_URLS+="${url}
+    "
+    done
+
     # print usage message
     "${CAT}" << EOM
   _______________________________________________________________________________
 
-    Your Docker Nginx proxy container is UP and RUNNING
+  Your Docker Nginx proxy container is UP and RUNNING
 
-    - For Mac/Windows environments only!
+  Solr is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
 
-    Please, add these entries in your hosts file
+  Mailhog is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}
 
-    127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
-    127.0.0.1 ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}
-    127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}
-
-    It can be done manually or if you prefer, just copy and paste the commands below:
-
-    -- Mac
-    sudo bash -c 'echo "# Docker4Acquia project - ${ACQUIA_SUBSCRIPTION}" >> /etc/hosts'
-    sudo bash -c 'echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}" >> /etc/hosts'
-    sudo bash -c 'echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}" >> /etc/hosts'
-    sudo bash -c 'echo "127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}" >> /etc/hosts'
-
-    -- Windows (prompt with administrator privileges)
-    echo # Docker4Acquia project - ${ACQUIA_SUBSCRIPTION} >> %WINDIR%\system32\drivers\etc\hosts
-    echo 127.0.0.1 ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT} >> %WINDIR%\system32\drivers\etc\hosts
-    echo 127.0.0.1 ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT} >> %WINDIR%\system32\drivers\etc\hosts
-    echo 127.0.0.1 ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT} >> %WINDIR%\system32\drivers\etc\hosts
-
+  PHP/Apache is avaiable at:
+  ${PHP_URLS}
 EOM
 
     # print messages if docker run was successful or not
