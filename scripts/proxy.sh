@@ -76,7 +76,7 @@ EOM
     PHP_URLS='';
     for url in "${_URLS[@]}"; do
       PHP_URLS+="${url}
-    "
+  "
     done
 
     # print usage message
