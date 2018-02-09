@@ -99,28 +99,39 @@ function remove_hosts_entries() {
   return 0
 }
 
-function add_unix_hosts_entries() {
+function add_hosts_entries() {
   # write the ip address and hostname
-  $_USER bash -c "echo "${MEMCACHED_IP}" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
-  $_USER bash -c "echo "${PERCONA_IP}" ""${ACQUIA_SUBSCRIPTION}"-mysql."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
-  $_USER bash -c "echo "${MAIL_IP}" ""${ACQUIA_SUBSCRIPTION}"-mail."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
-  $_USER bash -c "echo "${SOLR_IP}" ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
+  if is_linux; then
+    $_USER bash -c "echo "${MEMCACHED_IP}" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
+    $_USER bash -c "echo "${PERCONA_IP}" ""${ACQUIA_SUBSCRIPTION}"-mysql."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
+  fi
 
-  IFS=',' read -r -a _URLS <<< "${URLS}"
-  for url in "${_URLS[@]}"; do
-    $_USER bash -c "echo "${PHP_IP}" "${url}" | $_USER tee -a "${_HOSTS_FILE}""
-  done
-}
-
-function add_macwindows_hosts_entries() {
-  # write the ip address and hostname
   $_USER bash -c "echo 127.0.0.1 ""${ACQUIA_SUBSCRIPTION}"-mail."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}" 1>/dev/null"
   $_USER bash -c "echo 127.0.0.1 ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}" 1>/dev/null"
 
   IFS=',' read -r -a _URLS <<< "${URLS}"
+  PHP_URLS='';
   for url in "${_URLS[@]}"; do
     $_USER bash -c "echo 127.0.0.1 "${url}" | $_USER tee -a "${_HOSTS_FILE}" 1>/dev/null"
+    PHP_URLS+="${url}
+  "
   done
+
+  # print usage message
+  "${CAT}" << EOM
+  _______________________________________________________________________________
+
+  Your Docker Nginx proxy container is UP and RUNNING
+
+  Solr is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
+
+  Mailhog is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}
+
+  PHP/Apache is avaiable at:
+  ${PHP_URLS}
+EOM
 }
 
 ## flow
@@ -148,52 +159,15 @@ if [ $? -eq 0 ]; then
   PHP_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-php."${ENVIRONMENT}"")
 
   # declare hosts file location
-  if is_linux; then
+  if is_linux || is_mac; then
     _HOSTS_FILE="/etc/hosts"
-    _USER="sudo"
-    remove_hosts_entries
-    add_linux_hosts_entries
-    IFS=',' read -r -a _URLS <<< "${URLS}"
-    PHP_URLS='';
-    for url in "${_URLS[@]}"; do
-      PHP_URLS+="${url}:80
-    ${url}:443
-  "
-    done
-    "${CAT}" << EOM
-  _______________________________________________________________________________
-
-  Your Docker containers are UP and RUNNING
-
-  Solr is avaiable at:
-  ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}:8983
-
-  Memcached is avaiable at:
-  ${ACQUIA_SUBSCRIPTION}-memcached.${ENVIRONMENT}:11211
-
-  Mailhog is avaiable at:
-  ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}:8025
-
-  Percona (MySQL) is avaiable at:
-  ${ACQUIA_SUBSCRIPTION}-percona.${ENVIRONMENT}:3306
-
-  PHP/Apache is avaiable at:
-  ${PHP_URLS}
-  _______________________________________________________________________________
-
-EOM
-
+    _USER="sudo"      
   else
-    if is_mac; then
-      _HOSTS_FILE="/etc/hosts"
-      _USER="sudo"
-    else
-      _HOSTS_FILE="/c/Windows/System32/drivers/etc/hosts"
-      _USER=""
-    fi
-    remove_hosts_entries
-    add_macwindows_hosts_entries
+    _HOSTS_FILE="/c/Windows/System32/drivers/etc/hosts"
+    _USER=""
   fi
+  remove_hosts_entries
+  add_hosts_entries  
 
 else
 

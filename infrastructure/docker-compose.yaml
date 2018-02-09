@@ -45,6 +45,7 @@ services:
     environment:
       - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
       - VIRTUAL_PORT=8983
+      - HTTPS_METHOD=nohttps
 
   mail:
     image: mailhog/mailhog
@@ -54,6 +55,7 @@ services:
     environment:
       - VIRTUAL_HOST=${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}
       - VIRTUAL_PORT=8025
+      - HTTPS_METHOD=nohttps
 
   web:
     #build: ./custom/php
@@ -80,3 +82,8 @@ services:
       - ${FILES_FOLDER}:/mnt/gfs/${ACQUIA_SUBSCRIPTION}.dev
       # mount code
       - ${CODE_FOLDER}:/var/www/html
+
+networks:
+  default:
+    external:
+      name: proxy_default
