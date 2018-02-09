@@ -72,29 +72,6 @@ EOM
         --project-name "proxy" \
         up -d
 
-    IFS=',' read -r -a _URLS <<< "${URLS}"
-    PHP_URLS='';
-    for url in "${_URLS[@]}"; do
-      PHP_URLS+="${url}
-  "
-    done
-
-    # print usage message
-    "${CAT}" << EOM
-  _______________________________________________________________________________
-
-  Your Docker Nginx proxy container is UP and RUNNING
-
-  Solr is avaiable at:
-  ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
-
-  Mailhog is avaiable at:
-  ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}
-
-  PHP/Apache is avaiable at:
-  ${PHP_URLS}
-EOM
-
     # print messages if docker run was successful or not
     if [ $? -ne 0 ]; then
 
