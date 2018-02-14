@@ -82,14 +82,14 @@ function remove_hosts_entries() {
   cp "${_HOSTS_FILE}" "${_TFILE}"
 
   # if the ip or hostname is already in hosts remove it
-  $_USER bash -c "sed --in-place "/""${ACQUIA_SUBSCRIPTION}"-memcached"/d" "${_TFILE}""
-  $_USER bash -c "sed --in-place "/""${ACQUIA_SUBSCRIPTION}"-mysql"/d" "${_TFILE}""
-  $_USER bash -c "sed --in-place "/""${ACQUIA_SUBSCRIPTION}"-mail"/d" "${_TFILE}""
-  $_USER bash -c "sed --in-place "/""${ACQUIA_SUBSCRIPTION}"-solr"/d" "${_TFILE}""
+  $_USER bash -c "sed -i'.original' "/""${ACQUIA_SUBSCRIPTION}"-memcached"/d" "${_TFILE}""
+  $_USER bash -c "sed -i'.original' "/""${ACQUIA_SUBSCRIPTION}"-mysql"/d" "${_TFILE}""
+  $_USER bash -c "sed -i'.original' "/""${ACQUIA_SUBSCRIPTION}"-mail"/d" "${_TFILE}""
+  $_USER bash -c "sed -i'.original' "/""${ACQUIA_SUBSCRIPTION}"-solr"/d" "${_TFILE}""
 
   IFS=',' read -r -a _URLS <<< "${URLS}"
   for url in "${_URLS[@]}"; do
-    $_USER bash -c "sed --in-place "/"${url}"/d" "${_TFILE}""
+    $_USER bash -c "sed -i'.original' "/"${url}"/d" "${_TFILE}""
   done
 
   # put temporary content inside of hosts
