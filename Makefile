@@ -42,4 +42,4 @@ proxy:
 # run Docker4Acquia containers + Nginx proxy
 windows: proxy run
 mac: proxy run
-linux: proxy run
+linux: all
