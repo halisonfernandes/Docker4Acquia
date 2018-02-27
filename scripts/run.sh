@@ -101,11 +101,11 @@ function remove_hosts_entries() {
 
 function add_linux_hosts_entries() {
   # collect IPs
-  SOLR_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"")
-  MAIL_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-mail."${ENVIRONMENT}"")
-  MEMCACHED_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"")
-  PERCONA_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-percona."${ENVIRONMENT}"")
-  PHP_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-php."${ENVIRONMENT}"")
+  SOLR_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"")
+  MAIL_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-mail."${ENVIRONMENT}"")
+  MEMCACHED_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"")
+  PERCONA_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-percona."${ENVIRONMENT}"")
+  PHP_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-php."${ENVIRONMENT}"")
 
   $_USER bash -c "echo "${MEMCACHED_IP}" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
   $_USER bash -c "echo "${PERCONA_IP}" ""${ACQUIA_SUBSCRIPTION}"-mysql."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
