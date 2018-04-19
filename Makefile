@@ -40,6 +40,8 @@ proxy:
 	@./scripts/get-env.sh ./scripts/proxy.sh
 
 # run Docker4Acquia containers + Nginx proxy
-windows: proxy run
-mac: proxy run
-linux: all
+windows: run proxy
+mac: run proxy
+
+# alias for linux
+linux: run
