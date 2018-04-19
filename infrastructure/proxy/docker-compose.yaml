@@ -5,7 +5,6 @@ services:
     #build: ./custom/nginx
     image: jwilder/nginx-proxy
     container_name: nginx
-    env_file: ../${ENV_FILES_FOLDER}/nginx.env
     tty: true
     stdin_open: true
     # limit memory to 1GB (value must be in bytes)
@@ -17,3 +16,4 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ~/docker4acquia/proxy/certs:/etc/nginx/certs

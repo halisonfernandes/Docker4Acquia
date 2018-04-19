@@ -41,6 +41,139 @@ function get_docker_container_ip()
 
 } # end of get_docker_container_ss
 
+function is_linux()
+{
+  if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+function is_mac()
+{
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+function is_windows()
+{
+  if [[ "$OSTYPE" == "msys" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+function remove_hosts_entries() {
+  # Mac expects a different paramter format
+  if is_mac; then
+    _TFILE=`mktemp /tmp/tfile.XXXXX`
+  else
+    _TFILE=`mktemp --tmpdir tfile.XXXXX`
+  fi
+
+  trap "rm -f ${_TFILE}" 0 1 2 3 15
+
+  # copy hosts to temporary folder
+  cp "${_HOSTS_FILE}" "${_TFILE}"
+
+  # if the ip or hostname is already in hosts remove it
+  $_USER bash -c "sed -i'.original' "/""${ACQUIA_SUBSCRIPTION}"-memcached"/d" "${_TFILE}""
+  $_USER bash -c "sed -i'.original' "/""${ACQUIA_SUBSCRIPTION}"-mysql"/d" "${_TFILE}""
+  $_USER bash -c "sed -i'.original' "/""${ACQUIA_SUBSCRIPTION}"-mail"/d" "${_TFILE}""
+  $_USER bash -c "sed -i'.original' "/""${ACQUIA_SUBSCRIPTION}"-solr"/d" "${_TFILE}""
+
+  IFS=',' read -r -a _URLS <<< "${URLS}"
+  for url in "${_URLS[@]}"; do
+    $_USER bash -c "sed -i'.original' "/"${url}"/d" "${_TFILE}""
+  done
+
+  # put temporary content inside of hosts
+  $_USER bash -c "cat "${_TFILE}" | $_USER tee "${_HOSTS_FILE}" 1>/dev/null"
+
+  # exit OK
+  return 0
+}
+
+function add_linux_hosts_entries() {
+  # collect IPs
+  SOLR_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"")
+  MAIL_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-mail."${ENVIRONMENT}"")
+  MEMCACHED_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"")
+  PERCONA_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-percona."${ENVIRONMENT}"")
+  PHP_IP=$(get_docker_container_ip "proxy" ""${ACQUIA_SUBSCRIPTION}"-php."${ENVIRONMENT}"")
+
+  $_USER bash -c "echo "${MEMCACHED_IP}" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
+  $_USER bash -c "echo "${PERCONA_IP}" ""${ACQUIA_SUBSCRIPTION}"-mysql."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
+  $_USER bash -c "echo "${MAIL_IP}" ""${ACQUIA_SUBSCRIPTION}"-mail."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
+  $_USER bash -c "echo "${SOLR_IP}" ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}""
+
+  IFS=',' read -r -a _URLS <<< "${URLS}"
+  PHP_URLS='';
+  for url in "${_URLS[@]}"; do
+    $_USER bash -c "echo "${PHP_IP}" "${url}" | $_USER tee -a "${_HOSTS_FILE}""
+    PHP_URLS+="${url}:80
+    ${url}:443
+  "
+  done
+
+  "${CAT}" << EOM
+  _______________________________________________________________________________
+
+  Your Docker containers are UP and RUNNING
+
+  Solr is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}:8983
+
+  Memcached is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-memcached.${ENVIRONMENT}:11211
+
+  Mailhog is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}:8025
+
+  Percona (MySQL) is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-percona.${ENVIRONMENT}:3306
+
+  PHP/Apache is avaiable at:
+  ${PHP_URLS}
+  _______________________________________________________________________________
+
+EOM
+}
+
+function add_nginx_hosts_entries() {
+  $_USER bash -c "echo 127.0.0.1 ""${ACQUIA_SUBSCRIPTION}"-mail."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}" 1>/dev/null"
+  $_USER bash -c "echo 127.0.0.1 ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"" | $_USER tee -a "${_HOSTS_FILE}" 1>/dev/null"
+
+  IFS=',' read -r -a _URLS <<< "${URLS}"
+  PHP_URLS='';
+  for url in "${_URLS[@]}"; do
+    $_USER bash -c "echo 127.0.0.1 "${url}" | $_USER tee -a "${_HOSTS_FILE}" 1>/dev/null"
+    PHP_URLS+="${url}
+  "
+  done
+
+  # print usage message
+  "${CAT}" << EOM
+  _______________________________________________________________________________
+
+  Your Docker Nginx proxy container is UP and RUNNING
+
+  Solr is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}
+
+  Mailhog is avaiable at:
+  ${ACQUIA_SUBSCRIPTION}-mail.${ENVIRONMENT}
+
+  PHP/Apache is avaiable at:
+  ${PHP_URLS}
+EOM
+}
+
 ## flow
 # start message
 echo "  _______________________________________________________________________________"
@@ -58,53 +191,21 @@ if [ $? -eq 0 ]; then
   # change bash parameter
   set -e  #   errexit  - Abort script at first error, when a command exits with non-zero status (except in until or while loops, if-tests, list constructs)
 
-  # collect IPs
-  SOLR_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-solr."${ENVIRONMENT}"")
-  MEMCACHED_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-memcached."${ENVIRONMENT}"")
-  PERCONA_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-percona."${ENVIRONMENT}"")
-  PHP_IP=$(get_docker_container_ip "${ACQUIA_SUBSCRIPTION//[-]/}" ""${ACQUIA_SUBSCRIPTION}"-php."${ENVIRONMENT}"")
+  # declare hosts file location
+  if is_linux || is_mac; then
+    _HOSTS_FILE="/etc/hosts"
+    _USER="sudo"      
+  else
+    _HOSTS_FILE="/c/Windows/System32/drivers/etc/hosts"
+    _USER=""
+  fi
+  remove_hosts_entries
 
-"${CAT}" << EOM
-  _______________________________________________________________________________
-
-  Your Docker containers are UP and RUNNING
-
-  - For Linux environments only!
-
-  Solr is avaiable at:
-  ${SOLR_IP}:8983
-
-  Memcached is avaiable at:
-  ${MEMCACHED_IP}:11211
-
-  Percona (MySQL) is avaiable at:
-  ${PERCONA_IP}:3306
-
-  PHP/Apache is avaiable at:
-  ${PHP_IP}:80
-  ${PHP_IP}:443
-
-  If you prefer to use hostname instead, please add it to your hosts file
-  Just copy and paste the commands below in your terminal or add it manually later
-
-  sudo bash -c 'echo "# Docker4Acquia project - ${ACQUIA_SUBSCRIPTION}" >> /etc/hosts'
-  sudo bash -c 'echo "${SOLR_IP} ${ACQUIA_SUBSCRIPTION}-solr.local" >> /etc/hosts'
-  sudo bash -c 'echo "${MEMCACHED_IP} ${ACQUIA_SUBSCRIPTION}-memcached.local" >> /etc/hosts'
-  sudo bash -c 'echo "${PERCONA_IP} ${ACQUIA_SUBSCRIPTION}-percona.local" >> /etc/hosts'
-  sudo bash -c 'echo "${PHP_IP} ${ACQUIA_SUBSCRIPTION}-php.local" >> /etc/hosts'
-
-  THEN, will be able to access at:
-
-  ${ACQUIA_SUBSCRIPTION}-solr.${ENVIRONMENT}:9398
-  ${ACQUIA_SUBSCRIPTION}-memcached.${ENVIRONMENT}:11211
-  ${ACQUIA_SUBSCRIPTION}-percona.${ENVIRONMENT}:3306
-  ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}:80
-  ${ACQUIA_SUBSCRIPTION}-php.${ENVIRONMENT}:443
-
-  _______________________________________________________________________________
-
-EOM
-
+  if is_linux; then
+    add_linux_hosts_entries    
+  else
+    add_nginx_hosts_entries
+  fi
 else
 
 "${CAT}" << EOM
