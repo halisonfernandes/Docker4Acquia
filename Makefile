@@ -44,4 +44,4 @@ windows: run proxy
 mac: run proxy
 
 # alias for linux
-linux: all
+linux: run
